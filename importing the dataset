@@ -1,0 +1,5 @@
+df = pd.read_csv("/kaggle/input/car-price-prediction-dataset/cardekho.csv")
+df.head()
+df.shape
+df.isna().sum()
+df.info()
