@@ -1,0 +1,33 @@
+def convert_float(x):
+    try:
+        return float(x)
+    except:
+        return np.nan
+
+df["brand"] = df["name"].apply(lambda x: x.split()[0])
+
+categoricals = ["brand", "fuel", "seller_type", "transmission", "owner"]
+fig, axes = plt.subplots(nrows=1, ncols=5, figsize=(20, 6))
+for i, j in enumerate(categoricals):
+    df[j].value_counts().plot(kind="bar", ax=axes[i])
+    for container in axes[i].containers:
+        axes[i].bar_label(container)
+plt.tight_layout()
+plt.show()
+
+df.head()
+
+numericals = ["mileage(km/ltr/kg)", "engine", "max_power", "seats", "km_driven", "selling_price"]
+sns.pairplot(df, vars=numericals)
+plt.show()
+
+def plot(df, name, nums, axes):
+    group = df.groupby(name)
+    mean = group[nums].mean()
+    sns.barplot(x=mean.index, y=mean, ax=axes)
+    for container in axes.containers:
+        axes.bar_label(container)
+    axes.set_xticklabels(axes.get_xticklabels(), rotation=90)
+fig, axes = plt.subplots()
+plot(df, "year", "selling_price", axes)
+plt.show()
